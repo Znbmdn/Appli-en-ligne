@@ -8,6 +8,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
 ```
 
 ## Introduction
@@ -33,12 +34,14 @@ Packages:
 # Calendrier
 
 ```{r setup, include=FALSE}
-# Installer le package si vous ne l'avez pas encore installé
-# install.packages("plotly")
+
+# install.packages
+
 library(ggplot2)
 ```
 
-```{r setup, include=FALSE}
+
+```{r graph, echo=F, eval=T, include=TRUE}
 # Définir les données de chaque phase et période
 
 phases <- c("Phase 1", "Phase 2", "Phase 3", "Phase 4", "Phase 5", "Phase 6")
@@ -50,7 +53,7 @@ df_phases <- data.frame(Phase = phases, Start = start_dates, End = end_dates)
 
 # Créer le graphique ggplot
 ggplot(df_phases, aes(x = Start, xend = End, y = Phase, yend = Phase)) +
-  geom_segment(size = 2, color = "blue") +
+  geom_segment(linewidth = 2, color = "blue") +
   geom_text(aes(x = Start + (End - Start) / 2, label = paste(Phase, "\n", format(Start, "%d-%m-%Y"), " au ", format(End, "%d-%m-%Y"))),
             vjust = -0.5, size = 3) +
   labs(title = "Périodes associées à chaque phase",
@@ -59,7 +62,6 @@ ggplot(df_phases, aes(x = Start, xend = End, y = Phase, yend = Phase)) +
   theme_minimal()
 
 ```
-
 
 # Design et interface utilisateur
 
@@ -75,12 +77,19 @@ L'application comprendra les pages suivantes :
 - Page 3: Instructions
 
 
-# Liste déroulante des ingrédients
-
 # Liste déroulante des pays 
+Nous présentons en premier lieu la carte  des Pays spécifiques choisis pour les recettes.
+```{r carte, echo=FALSE,eval=TRUE, results=TRUE, warning=FALSE, comment=FALSE, message=FALSE, include = TRUE}
+
+library(leaflet)
+
+```
+
 ```{r setup, include=FALSE}
 liste_pays <- c("Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Côte d'Ivoire", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo (Congo-Brazzaville)", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Democratic Republic of the Congo", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini (Swaziland)", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Holy See", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar (Burma)", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia (formerly Macedonia)", "Norway", "Oman", "Pakistan", "Palau", "Palestine State", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States of America", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe")
 ```
+
+# Liste déroulante des ingrédients
 
 # Test et validation
 
