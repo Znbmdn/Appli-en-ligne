@@ -1,0 +1,30 @@
+---
+title: "CDC"
+author: "Groupe 1"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output: html_document
+---
+
+# Introduction 
+
+L'objectif de ce projet est de développer une application Shiny permettant aux utilisateurs de rechercher des recettes en fonction des ingrédients, des allergènes, des régimes alimentaires et du type de plat.
+
+# Objectifs
+
+1.Proposer des recettes à partir d'ingredients sélectionnées par l'utilisateurs
+2.Donner des informations nutritionnelles sur les recettes
+3.Indiquer les allergènes, le régime alimentaire et le type de plat
+4.Proposer en tous 42 recettes à partir de 6 ingrédients de base
+
+# Design et interface utilisateur
+
+L'interface utilisateur doit être conviviale et intuitive, avec des menus déroulants clairement étiquetés et des boutons d'action facilement accessibles.
+
+Les résultats de recherche doivent être présentés de manière claire et organisée dans un tableau interactif.
+
+Les détails des recettes sélectionnées doivent être affichés dans une fenêtre modale avec un bouton pour fermer la fenêtre.
+
+# Test et validation
+
+# Livrable
+
