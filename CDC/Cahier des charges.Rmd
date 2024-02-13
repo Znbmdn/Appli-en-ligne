@@ -1,0 +1,29 @@
+---
+title: "Cahier des charges"
+author: Cédric Octave ADECHINA, Maxime DE BONI, Antônio Gabriel ELEUTERIO VIANA, Thomas
+  FERNANDEZ, Diamande DELANNAY, Zineb BELMADAN
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+L'objectif de notre projet est de développer une application permettant aux utilisateurs de créer des recettes en sélectionnant des ingrédients, tout en fournissant des informations nutritionnelles sur les recettes générées.le temps de préparation ainsi que l'origine de la recette
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
