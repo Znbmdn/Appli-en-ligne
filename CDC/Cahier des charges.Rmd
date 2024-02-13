@@ -2,7 +2,7 @@
 title: "Cahier des charges"
 author: Cédric Octave ADECHINA, Maxime DE BONI, Antônio Gabriel ELEUTERIO VIANA, Thomas
   FERNANDEZ, Diamande DELANNAY, Zineb BELMADAN
-date: "`r Sys.Date()`"
+date: "`r format(Sys.time(), '%d %B %Y')`"
 output: html_document
 ---
 
@@ -58,7 +58,6 @@ ggplot(df_phases, aes(x = Start, xend = End, y = Phase, yend = Phase)) +
        y = "Phases du Projet") +
   theme_minimal()
 
-
 ```
 
 
@@ -86,16 +85,3 @@ liste_pays <- c("Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antig
 # Test et validation
 
 # Livrable
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
