@@ -15,28 +15,52 @@ knitr::opts_chunk$set(echo = TRUE)
 
 L'objectif de notre projet est de développer une application permettant aux utilisateurs de créer des recettes en sélectionnant des ingrédients, tout en fournissant des informations nutritionnelles sur les recettes générées.le temps de préparation ainsi que l'origine de la recette
 
-# Objectifs
-1.Proposer des recettes à partir d'ingredients sélectionnées par l'utilisateurs
-2.Donner des informations nutritionnelles sur les recettes
-3.Indiquer les allergènes, le régime alimentaire et le type de plat
-4.Proposer en tous 42 recettes à partir de 6 ingrédients de base
+# Objectifs et fonctionnalités
+
+1) Reherche de Recettes
+Permettre aux utilisateurs de rechercher des recettes en fonction d'ingrédients selectionnés.
+
+2) Affichage des Détails
+Afficher les détails des recettes sélectionnées, y compris les instructions de préparation, le temps nécessaire, etc.
+
+3) Filtrage Avancé
+Intégrer des filtres avancés tels que les calories, les protéines, les glucides,le temps de préparation, l'origine du plat, etc..
+
+4) Prooposer en tous 42 recettes à partir de 6 ingrédients de base
 
 # Outils
 L'application sera développé en utilisant les technologies suivantes
 
--Shiny
--R
--Github
--Rstudio 
+-Shiny :Nous avons utilisé ce framework interactif pour R  grâce au language statistique puissant pour créer une interface utilisateur interactive
+-R :Ce langage nous a permis la manipulation des données avec son vaste ensemble de packages dédiées à celà. ce qui facilite le traitement et la visualisation des informations liées aux recettes proposéés.
+-Github :La plateforme de développement collaboratif basée sur Git nous a faciliter le travail d'équipe et a permis le suivi des modifications apportées au code source.
+-Rstudio :L'environnement de développement  nous a offert une interface utilisateur pour la programmation offrant de différentes  fonctionnalités puissantes.
 
-Packages:
+# Packages:
+
+1) Shinydashboard: est un package R conçu pour créer des tableau de bord interactifs dans shiny.
+```{r setup, include=FALSE}
+# install.packages
+library(Shinydashboard)
+```
+
+2) DT: Le package DataTables est utilisé pour afficher des tableaux de données interactifs dans shiny, offre plusieurs fonctionnalités comme la recherche, le tri, etc..
+```{r setup, include=FALSE}
+# install.packages
+library(DT)
+```
+
+3) Shiny: le package permet de créer des application web interactives en R. Il permet la gestion des entrées, et la création d'une interface utilisateur interactive
+```{r setup, include=FALSE}
+# install.packages
+library(shiny)
+```
 
 # Calendrier
 
 ```{r setup, include=FALSE}
 
 # install.packages
-
 library(ggplot2)
 ```
 
@@ -52,6 +76,22 @@ end_dates <- as.Date(c("2024-02-06", "2024-02-09", "2024-02-12", "2024-02-15", "
 df_phases <- data.frame(Phase = phases, Start = start_dates, End = end_dates)
 
 # Créer le graphique ggplot
+ggplot(df_phases, aes(x = Start, xend = End, y = Phase, yend = Phase)) +
+  geom_segment(linewidth = 2, color = "blue") +
+  geom_text(aes(x = Start + (End - Start) / 2, label = paste(Phase, "\n", format(Start, "%d-%m-%Y"), " au ", format(End, "%d-%m-%Y"))),
+            vjust = -0.5, size = 3) +
+  labs(title = "Périodes associées à chaque phase",
+       x = "Date",
+       y = "Phases du Projet") +
+  theme_minimal()
+
+print(df_phases)
+
+#Ajuster les dates si nécessaire
+df_phases$Start[3] <- as.Date("2024-02-10")
+df_phases$End[2] <- as.Date("2024-02-09")
+
+
 ggplot(df_phases, aes(x = Start, xend = End, y = Phase, yend = Phase)) +
   geom_segment(linewidth = 2, color = "blue") +
   geom_text(aes(x = Start + (End - Start) / 2, label = paste(Phase, "\n", format(Start, "%d-%m-%Y"), " au ", format(End, "%d-%m-%Y"))),
@@ -83,14 +123,34 @@ Nous présentons en premier lieu la carte  des Pays spécifiques choisis pour le
 
 library(leaflet)
 
+library(leaflet)
+m<-leaflet()# creat a map widget
+
+m<-addTiles(m)#ajout de la couche open street map (par défaut)
+m <- addMarkers(m, lat=42.6384261, lng=12.674297, popup ="Italie")
+m <- addMarkers(m, lat=36.5748441, lng=139.2394179, popup = "Japon")
+m <- addMarkers(m, lat=46.603354, lng=1.8883335, popup = "France")
+m <- addMarkers(m, lat=23.6585116, lng=-102.0077097, popup = "Mexique")
+m <- addMarkers(m, lat=39.3260685, lng=-4.8379791, popup = "Espagne")
+m <- addMarkers(m, lat=38.9953683, lng=21.9877132, popup = "Grèce")
+m <- addMarkers(m, lat=22.3511148, lng=78.6677428, popup = "Inde")
+m <- addMarkers(m, lat=26.2421016, lng=5.155224, popup = "Maghreb")
+m <- addMarkers(m, lat=36.966428, lng=-95.844032, popup = "États-Unis")
+
+m ## afficher la carte
 
 ```
 
-```{r setup, include=FALSE}
-liste_pays <- c("Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Côte d'Ivoire", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo (Congo-Brazzaville)", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Democratic Republic of the Congo", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini (Swaziland)", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Holy See", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar (Burma)", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia (formerly Macedonia)", "Norway", "Oman", "Pakistan", "Palau", "Palestine State", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States of America", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe")
-```
 
 # Liste déroulante des ingrédients
+
+```{r setup, include=FALSE}
+
+#Liste ingrédients
+
+liste_Ingrédients <- c("Pates", "Poulet", "Tomate", "Carotte", "Œuf", "Pois chiche", "Saumon fumé", "Crème fraiche", "Parmesan", "Bouillon de poulet", "Sauce soja", "Algues Nori", "Oignon", "Sauce yakisoba", "Sauce Pesto", "Tomates cerise", "Poivre noir", "Crevette", "Germe de soja", "Sauce pad thaï", "Huile d’olive", "Persil", "Ail", "Feuille de Basilic", "Jus de citron", "Romarin", "Épices", "Sauce Teryaki", "Graine de sésame", "Marinade au gingembre", "Laitue", "Croûtons", "Vinaigrette César", "Poivron", "Cumin", "Marinade au yaourt", "Sauce alfredo", "Champignons", "Sauce barbecue", "Paprika", "Miel", "Yaourt nature", "Pain", "Aubergine", "Courgette", "Viande haché", "Riz", "Herbe", "Feta", "Concombre", "Olives noires", "Sel", "Légumes", "Pomme de terre", "Bouillon de légumes", "Poisson", "Farine", "Sucre", "Curry", "Lait", "Céleri", "Noix", "Poireau", "Lardon", "Vin blanc", "Jambon", "Levure", "Fromage", "Pâte feuilletée", "Épinard", "Vanille", "Lait de coco", "Tahini", "Paprika", "Coriandre")
+```
+
 
 # Test et validation
 
