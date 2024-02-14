@@ -6,31 +6,206 @@ library(shiny)
 library(DT)
 
 # Données au hasard pour les ingrédients, les recettes et les temps de préparation pour essayer le code
-ingredients <- c("Oeufs", "Farine", "Sucre", "Lait", "Beurre", "Sel", "Poivre", "Tomate", "Oignon", "Ail")
+ingredients <- c("Oeufs", "Légumes variés", "Sel", "Poivre", "Pâtes", "Lardons", "Crème fraîche",
+                 "Parmesan", "Laitue", "Croûtons", "Poulet", "Sauce césar", "Poulet entier",
+                 "Herbes aromatiques", "Aubergine", "Courgette", "Poivron", "Tomate", "Oignon",
+                 "Ail", "Huile d'olive", "Herbes de Provence", "Viande hachée", "Persil",
+                 "Chapelure", "Viande de boeuf", "Fromage blanc", "Fruits rouges", "Citron",
+                 "Farine", "Fruits frais variés", "Crème pâtissière", "Sucre glace", "Menthe",
+                 "Riz arborio", "Champignons", "Vin blanc", "Beurre", "Pâte brisée", "Saumon fumé",
+                 "Poireaux", "Quinoa", "Vinaigre balsamique", "Farine de sarrasin", "Fromage de chèvre",
+                 "Crème fraîche épaisse", "Crème fraîche liquide", "Levure chimique", "Gingembre",
+                 "Yaourt nature", "Épices indiennes", "Coriandre", "Carottes", "Bouillon de légumes",
+                 "Cumin", "Fromage à fondue", "Pain", "Cornichons", "Pommes de terre", "Lentilles",
+                 "Avocat", "Lait de coco", "Curry", "Cerises", "Vanille", "Tortillas", "Haricots rouges",
+                 "Crème fraîche allégée", "Mélange de légumes mexicains")
 recettes <- data.frame(
-  Nom = c("Omelette", "Crêpes", "Tarte aux pommes", "Sauce tomate", "Soupe à l'oignon"),
-  Type = c("Entrée", "Dessert", "Dessert", "Plat principal", "Entrée"),
-  Ingrédients = c("Oeufs, Lait, Sel, Poivre", "Farine, Oeufs, Lait, Sucre", "Farine, Beurre, Sucre, Pommes", "Tomate, Oignon, Ail, Sel, Poivre", "Oignon, Beurre, Farine, Bouillon"),
-  Instructions = c("Battez les oeufs, ajoutez le lait, assaisonnez avec sel et poivre, faites cuire dans une poêle chaude.", "Mélangez la farine, les oeufs, le lait et le sucre, faites cuire dans une poêle.", "Préparez une pâte avec la farine, le beurre, le sucre et les pommes, faites cuire au four.", "Faites revenir les tomates, les oignons et l'ail dans une casserole, assaisonnez avec sel et poivre.", "Faites revenir les oignons dans du beurre, ajoutez la farine, puis le bouillon, laissez mijoter."),
-  Temps_de_preparation = c("15 minutes", "30 minutes", "45 minutes", "60 minutes", "45 minutes"),
+  Nom = c("Omelette aux Légumes", "Pâtes à la Carbonara", "Salade César", "Poulet rôti aux Herbes", "Ratatouille Provençale",
+          "Boulettes de Viande à la Provençale", "Gâteau au Fromage Blanc et Fruits Rouges", "Risotto aux Champignons et Parmesan",
+          "Tarte aux Poireaux et Saumon Fumé", "Salade de Quinoa aux Légumes Rôtis", "Muffins aux Myrtilles et Amandes",
+          "Poulet Tikka Masala", "Galette de Sarrasin aux Champignons et Fromage de Chèvre", "Velouté de Carottes au Cumin",
+          "Fondue au Fromage et Vin Blanc", "Salade de Lentilles et Avocat", "Poulet au Curry et Lait de Coco",
+          "Clafoutis aux Cerises et Amandes", "Tacos Mexicains aux Haricots et Avocat", "Gâteau de Crêpes aux Fruits Frais"),
+  Type = c("Entrée", "Plat principal", "Entrée", "Plat principal", "Plat principal",
+           "Plat principal", "Dessert", "Plat principal", "Plat principal", "Entrée",
+           "Dessert", "Plat principal", "Plat principal", "Entrée", "Plat principal",
+           "Entrée", "Plat principal", "Dessert", "Plat principal", "Dessert"),
+  Ingrédients = c("Oeufs, Légumes variés, Sel, Poivre", "Pâtes, Lardons, Oeufs, Crème fraîche, Parmesan, Poivre",
+                  "Laitue, Croûtons, Poulet, Parmesan, Sauce césar", "Poulet entier, Herbes aromatiques, Sel, Poivre",
+                  "Aubergine, Courgette, Poivron, Tomate, Oignon, Ail, Huile d'olive, Herbes de Provence",
+                  "Viande hachée, Oignon, Ail, Persil, Chapelure, Oeuf, Sel, Poivre",
+                  "Fromage blanc, Oeufs, Sucre, Farine, Fruits rouges, Citron, Sel",
+                  "Riz arborio, Champignons, Oignon, Vin blanc, Bouillon de légumes, Parmesan, Beurre, Sel, Poivre",
+                  "Pâte brisée, Poireaux, Saumon fumé, Crème fraîche, Oeufs, Sel, Poivre",
+                  "Quinoa, Courgette, Poivron, Tomate, Oignon, Huile d'olive, Vinaigre balsamique, Sel, Poivre",
+                  "Farine, Sucre, Oeufs, Lait, Beurre, Myrtilles, Amandes, Levure chimique, Sel",
+                  "Poulet, Tomate, Oignon, Ail, Gingembre, Yaourt nature, Épices indiennes, Coriandre, Sel, Poivre",
+                  "Farine de sarrasin, Oeufs, Champignons, Fromage de chèvre, Crème fraîche, Sel, Poivre",
+                  "Carottes, Oignon, Ail, Bouillon de légumes, Crème fraîche, Cumin, Sel, Poivre",
+                  "Fromage à fondue, Vin blanc, Ail, Pain, Cornichons, Pommes de terre, Sel, Poivre",
+                  "Lentilles, Avocat, Tomate, Persil, Citron, Huile d'olive, Sel, Poivre",
+                  "Poulet, Lait de coco, Curry, Oignon, Ail, Gingembre, Coriandre, Sel, Poivre",
+                  "Cerises, Oeufs, Farine, Sucre, Lait, Amandes, Beurre, Sel, Vanille",
+                  "Tortillas, Haricots rouges, Avocat, Tomate, Oignon, Coriandre, Fromage râpé, Crème fraîche, Sel, Poivre",
+                  "Crêpes, Fruits frais variés, Crème pâtissière, Sucre glace, Menthe"),
+  Instructions = c("Battez les oeufs, ajoutez les légumes, assaisonnez avec sel et poivre, faites cuire dans une poêle chaude.",
+                   "Faites cuire les pâtes, faites revenir les lardons, mélangez avec les pâtes cuites, les oeufs battus, la crème fraîche, le parmesan et le poivre.",
+                   "Mélangez la laitue, les croûtons, le poulet, le parmesan, ajoutez la sauce césar, mélangez.",
+                   "Assaisonnez le poulet avec des herbes aromatiques, du sel et du poivre, faites rôtir au four.",
+                   "Faites revenir les légumes dans l'huile d'olive avec l'ail et l'oignon, assaisonnez avec les herbes de Provence.",
+                   "Mélangez la viande hachée avec l'oignon, l'ail, le persil, la chapelure, l'oeuf, formez des boulettes, faites cuire dans une poêle.",
+                   "Mélangez le fromage blanc, les oeufs, le sucre, la farine, le citron, ajoutez les fruits rouges, faites cuire au four.",
+                   "Faites revenir l'oignon dans du beurre, ajoutez le riz et le vin blanc, puis le bouillon de légumes, les champignons, le parmesan, assaisonnez.",
+                   "Faites revenir les poireaux, étalez-les sur la pâte brisée, ajoutez le saumon fumé, le mélange d'oeufs et de crème fraîche, assaisonnez, faites cuire au four.",
+                   "Faites rôtir les légumes dans l'huile d'olive, mélangez avec le quinoa cuit, assaisonnez avec le vinaigre balsamique, le sel et le poivre.",
+                   "Mélangez la farine, le sucre, les oeufs, le lait, le beurre fondu, les myrtilles, les amandes, la levure chimique, le sel, faites cuire au four.",
+                   "Faites revenir le poulet, les oignons, l'ail et le gingembre, ajoutez les tomates, les épices, le yaourt, la coriandre, faites mijoter.",
+                   "Faites cuire les galettes de sarrasin, garnissez-les avec les champignons poêlés et le fromage de chèvre, ajoutez la crème fraîche, assaisonnez.",
+                   "Faites cuire les carottes, l'oignon et l'ail dans le bouillon de légumes, mixez avec la crème fraîche et le cumin, assaisonnez.",
+                   "Faites fondre le fromage dans le vin blanc avec l'ail, trempez les morceaux de pain dans le fromage fondu, servez avec les cornichons et les pommes de terre.",
+                   "Faites cuire les lentilles, mélangez avec les avocats, les tomates, le persil, le citron, l'huile d'olive, assaisonnez.",
+                   "Faites cuire le poulet avec l'oignon, l'ail, le curry, ajoutez le lait de coco, laissez mijoter, assaisonnez.",
+                   "Dénoyautez les cerises, mélangez les oeufs, la farine, le sucre, le lait, les amandes, faites cuire au four.",
+                   "Réchauffez les tortillas, garnissez de haricots, d'avocat, de tomate, d'oignon, de coriandre, de fromage râpé, de crème fraîche, assaisonnez.",
+                   "Alternez les crêpes avec la crème pâtissière et les fruits frais, saupoudrez de sucre glace, décorez de feuilles de menthe."),
+  Temps_de_preparation = c("15 minutes", "20 minutes", "30 minutes", "60 minutes", "45 minutes",
+                           "45 minutes", "60 minutes", "30 minutes", "45 minutes", "40 minutes",
+                           "30 minutes", "45 minutes", "25 minutes", "40 minutes", "30 minutes",
+                           "20 minutes", "50 minutes", "30 minutes", "20 minutes", "45 minutes"),
+  Origine = c("France", "Italie", "États-Unis", "France", "France",
+              "France", "France", "Italie", "France", "International",
+              "France", "Inde", "France", "Suisse", "France",
+              "International", "France", "France", "Mexique", "France"),
   stringsAsFactors = FALSE
 )
 
+allergenes <- c("Gluten", "Lactose", "Oeufs", "Arachides", "Fruits à coque")
+regimes <- c("Tous", "Végétarien", "Végétalien", "Sans gluten", "Cétogène")
+types_plat <- c("Tous", "Entrée", "Plat principal", "Dessert", "Apéritif")
+durees <- c("Tous", "Express (<20 min)", "Rapide (<30 min)", "Normale (<1 heure)", "Longue (> 1 heure)")
+origine <- c("Tous", "France", "Italie", "États-Unis", "Inde", "Suisse", "Mexique", "International")
+
 ui <- fluidPage(
-  titlePanel("Sélection de recettes"),
-  sidebarLayout(
-    sidebarPanel(
-      selectInput("ingredient", "Sélectionnez les ingrédients :", choices = ingredients, multiple = TRUE),
-      selectInput("type_recette", "Sélectionnez le type de recette :", choices = c("Tous", "Entrée", "Plat principal", "Dessert", "Apéritif"))
+  tags$head(
+    tags$style(HTML("
+      body {
+        margin: 1cm; # Ajoute des marges de 1 cm autour de la page
+      }
+      .header-wrapper {
+        width: 100%;
+      }
+      .header {
+        background-color: #2c3e50; /* Bleu foncé */
+        padding: 30px;
+        text-align: left; /* Alignement à gauche */
+        color: #E4E4E4; /* Gris foncé */
+        font-size: 24px;
+        font-weight: bold;
+      }
+    "))
+  ),
+  div(class = "header", "NutriPlaisirs : Des Recettes Santé à Votre Goût"),
+  fluidRow(
+    style = "background-color: #FFA500; padding: 20px;",
+    column(
+      width = 2,
+      h3("Ingrédients", align = "center", style = "color: #FFFFFF;"),
+      selectizeInput("ingredient", "", choices = ingredients, multiple = TRUE, options = list(
+        placeholder = "Sélectionnez les ingrédients...",
+        plugins = list('remove_button')
+      ))
     ),
-    mainPanel(
-      DTOutput("recettes_table")
+    column(
+      width = 2,
+      h3("Allergènes", align = "center", style = "color: #FFFFFF;"),
+      selectizeInput("allergene", "", choices = allergenes, multiple = TRUE, options = list(
+        placeholder = "Sélectionnez les allergènes...",
+        plugins = list('remove_button')
+      ))
+    ),
+    column(
+      width = 2,
+      h3("Diète", align = "center", style = "color: #FFFFFF;"),
+      selectInput("regime", "", choices = regimes, selectize = FALSE)
+    ),
+    column(
+      width = 2,
+      h3("Type de plat", align = "center", style = "color: #FFFFFF;"),
+      selectizeInput("type_recette", "", choices = types_plat, options = list(
+        placeholder = "Sélectionnez le type de plat...",
+        plugins = list('remove_button')
+      ))
+    ),
+    column(
+      width = 2,
+      h3("Temps", align = "center", style = "color: #FFFFFF;"),
+      selectInput("duree", "", choices = durees, selectize = FALSE)
+    ),
+    column(
+      width = 2,
+      h3("Origine", align = "center", style = "color: #FFFFFF;"),  
+      selectizeInput("origine", "", choices = origine, options = list(
+        placeholder = "Sélectionnez...",
+        plugins = list('remove_button')
+      ))
     )
-  )
+  ),
+  fluidRow(
+    DTOutput("recettes_table")
+  ),
+  tags$style(HTML("
+    .dataTables_wrapper {
+      background-color: #FFDAB9; # couleur arrière-plan qui englobe le tableau
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: none;
+    }
+  ")),
+  tags$style(HTML("
+    .modal-dialog {
+      max-width: 800px;
+      color: black; #FFDAB9; # couleur du texte du pop up
+    }
+    .modal-content {
+      background-color: #FFDAB9; # couleur de l'arrière plan du pop up
+    }
+    .modal-header {
+      border-bottom: none;
+      color: black; # couleur du titre du pop up
+    }
+    .selected-row {
+    background-color: #FFDAB9; # couleur de fond pour la sélection
+    }
+    .modal-footer {
+      border-top: none;
+    }
+    .dataTables_filter {
+      text-align: right;
+    }
+    .dataTables_paginate {
+      float: right;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      color: black; # couleur du texte du tableau
+    }
+    th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #FFA500; # couleur des en-têtes de colonnes du tableau
+    }
+    tr:nth-child(even) {
+      background-color: #FFE4B2; #couleurs des lignes du tableau
+    }
+    tr:hover {
+      background-color: #FFD699; #couleur surbrillance d'une ligne du tableau lorsque souris passe dessus
+    }
+  "))
 )
 
 server <- function(input, output, session) {
-  # Filtrer les recettes en fonction des sélections
   recettes_filtrées <- reactive({
     filtered_recipes <- recettes
     
@@ -39,38 +214,97 @@ server <- function(input, output, session) {
       filtered_recipes <- filtered_recipes[sapply(filtered_recipes$Ingrédients, function(x) all(input$ingredient %in% strsplit(x, ", ")[[1]])), ]
     }
     
-    # Filtrer par type de recette sélectionné
-    if (input$type_recette != "Tous") {
+    # Filtrer par allergènes à éviter
+    if (!is.null(input$allergene) && length(input$allergene) > 0) {
+      for (i in input$allergene) {
+        filtered_recipes <- filtered_recipes[!grepl(i, filtered_recipes$Ingrédients), ]
+      }
+    }
+    
+    # Filtrer par types de recettes
+    if (!is.null(input$type_recette) && input$type_recette != "Tous") {
       filtered_recipes <- filtered_recipes[filtered_recipes$Type == input$type_recette, ]
     }
+    
+    # Filtrer par diète
+    if (!is.null(input$regime) && input$regime != "Tous") {
+      for (i in input$regime) {
+        if (i == "Végétarien") {
+          filtered_recipes <- filtered_recipes[!grepl("Viande", filtered_recipes$Type), ]
+        }
+        if (i == "Végétalien") {
+          filtered_recipes <- filtered_recipes[!grepl("Oeufs|Lait|Fromage|Miel", filtered_recipes$Ingrédients), ]
+        }
+        if (i == "Sans gluten") {
+          filtered_recipes <- filtered_recipes[!grepl("Farine|Pâtes|Pain", filtered_recipes$Ingrédients), ]
+        }
+        if (i == "Cétogène") {
+        }
+      }
+    }
+    
+    # Filtrer par Temps de préparation
+    if (input$duree != "Tous") {
+      if (input$duree == "Express (<20 min)") {
+        filtered_recipes <- filtered_recipes[grepl("minutes|minute", filtered_recipes$Temps_de_preparation) & as.numeric(gsub("\\D", "", filtered_recipes$Temps_de_preparation)) <= 20, ]
+      } else if (input$duree == "Rapide (<30 min)") {
+        filtered_recipes <- filtered_recipes[grepl("minutes|minute", filtered_recipes$Temps_de_preparation) & as.numeric(gsub("\\D", "", filtered_recipes$Temps_de_preparation)) <= 30, ]
+      } else if (input$duree == "Normale (<1 heure)") {
+        filtered_recipes <- filtered_recipes[grepl("minutes|minute", filtered_recipes$Temps_de_preparation) & as.numeric(gsub("\\D", "", filtered_recipes$Temps_de_preparation)) <= 60, ]
+      } else if (input$duree == "Longue (> 1 heure)") {
+        filtered_recipes <- filtered_recipes[grepl("hour|hours", filtered_recipes$Temps_de_preparation) & as.numeric(gsub("\\D", "", filtered_recipes$Temps_de_preparation)) >= 60, ]
+      }
+    }
+    
+    # Filtrer par Origine
+    if (!is.null(input$origine) && input$origine != "Tous") {  
+      filtered_recipes <- filtered_recipes[filtered_recipes$Origine == input$origine, ]
+    }
+    
     
     filtered_recipes
   })
   
-  # Afficher la table des recettes
+  # Afficher le tableau des recettes
   output$recettes_table <- renderDT({
     datatable(
-      recettes_filtrées(),
-      selection = "single",
-      options = list(
-        searching = TRUE,
-        lengthMenu = c(5, 10, 15),
-        scrollY = "400px",
-        scrollCollapse = TRUE
+      recettes_filtrées(),  # Utilise les données filtrées des recettes
+      selection = "single",  # Permet à l'utilisateur de sélectionner une seule ligne à la fois
+      options = list(  # Définit les options du DataTable
+        searching = TRUE,  # Active la barre de recherche
+        lengthMenu = list(c(5, 10, 15), c("5", "10", "15")),  # Options de longueur du tableau par page
+        scrollY = "600px",  # Hauteur maximale du tableau avec une barre de défilement verticale
+        scrollCollapse = TRUE,  # Réduit la hauteur du tableau lorsqu'il y a moins de lignes que la hauteur maximale
+        fixedHeader = TRUE,  # Fixe l'en-tête du tableau en haut lors du défilement
+        language = list(  # Définit la langue des éléments d'interface utilisateur
+          search = "Rechercher :",  # Texte pour la barre de recherche
+          lengthMenu = "Afficher _MENU_ recettes par page",  # Texte pour le menu de longueur
+          info = "Affichage de l'élément _START_ à _END_ sur un total de _TOTAL_ entrées",  # Information sur le nombre d'entrées affichées
+          paginate = list(previous = 'Précédent', `next` = 'Suivant'),
+          infoEmpty = "Affichage de l'élément 0 à 0 sur un total de 0 recettes",  # Message affiché lorsque le tableau est vide
+          infoFiltered = "(filtré à partir de _MAX_ entrées totales)",  # Information sur le nombre d'entrées filtrées
+          zeroRecords = "Aucune recette sous ce nom disponible dans le tableau",  # Message affiché lorsque aucun résultat ne correspond à la recherche
+          emptyTable = "Aucune recette disponible dans le tableau",  # Message affiché lorsque le tableau est vide
+          first = "Premier",  # Texte pour le bouton 'Premier'
+          last = "Dernier"  # Texte pour le bouton 'Dernier'
+        )
       )
     )
   })
   
   # Afficher une fenêtre détail recette lorsqu'une recette est cliquée
   observeEvent(input$recettes_table_rows_selected, {
-    showModal(
-      modalDialog(
-        title = "Détails de la recette",
-        HTML(paste0("<h2>Recette : ", recettes_filtrées()$Nom[input$recettes_table_rows_selected], "</h2><p><strong>Type :</strong> ", recettes_filtrées()$Type[input$recettes_table_rows_selected], "</p><p><strong>Ingrédients :</strong> ", recettes_filtrées()$Ingrédients[input$recettes_table_rows_selected], "</p><p><strong>Instructions :</strong> ", recettes_filtrées()$Instructions[input$recettes_table_rows_selected], "</p><p><strong>Temps de préparation :</strong> ", recettes_filtrées()$Temps_de_preparation[input$recettes_table_rows_selected])),
-        footer = actionButton("close_modal_button", "Fermer"),
-        easyClose = TRUE
+    selected_row <- input$recettes_table_rows_selected
+    if (!is.null(selected_row) && length(selected_row) > 0) {
+      showModal(
+        modalDialog(
+          title = "Détails de la recette",
+          HTML(paste0("<h2>Recette : ", recettes_filtrées()$Nom[selected_row], "</h2><p><strong>Type :</strong> ", recettes_filtrées()$Type[selected_row], "</p><p><strong>Ingrédients :</strong> ", recettes_filtrées()$Ingrédients[selected_row], "</p><p><strong>Instructions :</strong> ", recettes_filtrées()$Instructions[selected_row], "</p><p><strong>Temps_de_preparation :</strong> ", recettes_filtrées()$`Temps_de_preparation`[selected_row])),
+          footer = actionButton("close_modal_button", "Fermer", style = "background-color: #FFA500; color: white; border: none; padding: 10px 20px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; border-radius: 5px;"),
+          easyClose = TRUE
+        )
       )
-    )
+    }
   })
   
   # Fermer la fenêtre détail recette
@@ -79,5 +313,5 @@ server <- function(input, output, session) {
   })
 }
 
-# Lancement application
+
 shinyApp(ui = ui, server = server)

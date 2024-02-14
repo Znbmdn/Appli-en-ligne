@@ -101,4 +101,4 @@ Envisagez des interventions médicales ou chirurgicales si votre obésité est s
 }
 
 # Exécution de l'application Shiny
-shinyApp(ui = ui, server = server)
+# shinyApp(ui = ui, server = server)
