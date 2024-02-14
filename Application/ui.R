@@ -93,7 +93,7 @@ ui <- dashboardPage(
   dashboardSidebar(
     sidebarMenu(
       # Onglets dans le menu
-      menuItem("Informations utilisateur", tabName = "user", icon = icon("user")), 
+      menuItem("Profil Nutritionnel", tabName = "user", icon = icon("user")), 
       menuItem("Choix de Recettes", tabName = "filter_recipes", icon = icon("cutlery")),
       menuItem("Recommandations", tabName = "aides", icon = icon("search")),
       menuItem("À propos", tabName = "about", icon = icon("info-circle"))
@@ -158,6 +158,26 @@ ui <- dashboardPage(
                                 .custom-box {
                                   background-color: #E1E9F5; /* Couleur de fond de la boîte personnalisée */
                                 }
+                                
+                                /* Styles de la boîte personnalisée */
+                                .custom-box1 {
+                                  background-color: #CED5E0; /* Couleur de fond de la boîte petit déjeuner */
+                                }
+                                
+                                /* Styles de la boîte personnalisée */
+                                .custom-box2 {
+                                  background-color: #CED5E0; /* Couleur de fond de la boîte déjeuner */
+                                }
+                                
+                                /* Styles de la boîte personnalisée */
+                                .custom-box3 {
+                                  background-color: #CED5E0; /* Couleur de fond de la boîte diner */
+                                }
+                                
+                                /* Styles de la boîte personnalisée */
+                                .custom-box4 {
+                                  background-color: #CED5E0; /* Couleur de fond des boîtes résultats IMC et kcal */
+                                }
                               
                               /* Styles du popup */
                                 .modal-content {
@@ -168,6 +188,18 @@ ui <- dashboardPage(
                                 .modal-header {
                                   background-color: #3C8DBC; /* Couleur de fond de len-tête du popup */
                                 color: #fff; /* Couleur du texte de len-tête du popup */
+                                }
+                                
+                                /* Styles du bouton Calculer */
+                                #calculate_button {
+                                  background-color: #428BCA; /* Couleur de fond du bouton Calculer */
+                                  border-color: #428BCA; /* Couleur de bordure du bouton Calculer */
+                                  color: #fff; /* Couleur du texte */
+                                }
+                                
+                                /* Ajoutez la classe personnalisée pour centrer le texte dans le wellPanel */
+                                .center-text {
+                                  text-align: center;
                                 }
 
                               '))),
@@ -212,7 +244,7 @@ ui <- dashboardPage(
                 plugins = list('remove_button')
               )))
             ),
-            class = "custom-box" # Appliquer couleur du fond de box
+            class = "custom-box" 
           )
         ),
         fluidRow(
@@ -227,47 +259,120 @@ ui <- dashboardPage(
           )
         )
       ),
+      
       # 4ème onglet About l'appli
       tabItem(
         tabName = "about",
         h2("À propos de NutriPlaisirs"),
-        h3("NutriPlaisirs : Des Recettes Santé à Votre Goût"),
-        p("Cette application a été développée pour vous aider à trouver des recettes saines et délicieuses."),
-        p("Elle vous permet de filtrer les recettes en fonction de divers critères tels que les ingrédients, les allergènes, le type de plat, la durée de préparation et l'origine."),
-        p("Profitez de NutriPlaisirs pour découvrir de nouvelles idées culinaires et ravir vos papilles !")
+        h3("NutriPlaisirs : Des Recettes à Votre Goût"),
+        p("Cette application a été développée pour vous aider à trouver des recettes délicieuses en fonction de vos préférences et de vos objectifs."),
+        p("Elle vous permet de filtrer les recettes en fonction de divers critères tels que les ingrédients, les allergènes, le type de plat, la durée de préparation et l'origine. Elle vous permet aussi, par la même occasion, de calculer votre besoin énergétique journalier."),
+        p("Profitez de NutriPlaisirs pour découvrir de nouvelles idées culinaires et atteindre vos objectifs !"),
+        h3("Auteurs"),
+        p("L'application a été conçue dans le cadre du module OPEN par des étudiants de l'Isara."),
+        p("Les auteurs de cette application sont :"),
+        p("- Cédric Octave ADECHINA"),
+        p("- Zineb BELMADAN"),
+        p("- Maxime DE BONI"),
+        p("- Diamande DELANNAY"),
+        p("- Antônio Gabriel ELEUTERIO VIANA ?"),
+        p("- Thomas FERNANDEZ-SANTONNAT"),
+        h3("Informations des calculs nutritionnels"),
+        p("Les valeurs de kcal/j sont basées sur des recommandations générales et peuvent nécessiter des ajustements en fonction de facteurs individuels tels que la composition corporelle et l'état de santé. Ils fournissent donc une estimation générale des besoins caloriques quotidiens et de la répartition des calories entre les repas. Il est toujours recommandé de consulter un professionnel pour obtenir des conseils nutritionnels personnalisés."),
+        p("Voici comment les différents calculs sont effectués :"),
+        h4("1. Calcul de l'IMC (Indice de Masse Corporelle) :"),
+        p("L'IMC est calculé en divisant le poids (en kg) par le carré de la taille (en m). Cet indice est utilisé pour évaluer le statut pondéral d'une personne."),
+        h4("2. Calcul des besoins caloriques quotidiens :"), 
+        p("Les besoins caloriques quotidiens sont calculés à partir de la formule du BMR (Basal Metabolic Rate), qui est une estimation des calories que votre corps brûle au repos. Cette estimation tient compte de facteurs tels que votre poids, votre taille, votre âge et votre sexe."), 
+        p("Ensuite, en fonction de votre niveau d'activité physique, cette estimation est ajustée. Les personnes plus actives ont besoin de plus de calories pour soutenir leurs activités quotidiennes et leurs exercices physiques."),
+        p("Puis les objectifs sont pris en compte à partir de la moyenne de ces recommandations :"),
+        p("    - Si l'objectif est de garder le même poids, il faut un apport calorique quotidien égal."),
+        p("    - Si l'objectif est de prendre du poids, il faut augmenter légèrement l'apport calorique quotidien (de 200 à 500 kcal)."),
+        p("    - Si l'objectif est de prendre de la masse musculaire, il faut augmenter légèrement l'apport calorique quotidien (de 300 kcal)."),
+        p("    - Si l'objectif est de perdre du poids, il faut diminuer progressivement l'apport calorique quotidien (de 300 à 700 kcal)."),
+        h4("3. Répartition des calories entre les repas :"), 
+        p("Les calories sont réparties entre les repas (petit-déjeuner, déjeuner, dîner) en fonction de proportions standard. En moyenne, le petit-déjeuner représente environ 20-25% des calories totales, le déjeuner et le dîner environ 30-35% chacun.")
       ),
+      
       # 1er onglet Informations utilisateur
       tabItem(
         tabName = "user",
-        h2("Informations utilisateur"),
+        h2("Profil Nutritionnel et Besoins Caloriques"),
+        h3("Calculateur de besoins caloriques journaliers"),
         sidebarLayout(
           sidebarPanel(
-            radioButtons("sexe", "Sexe :", choices = c("M" = "M.", "F" = "Mme")),
-            textInput("nom", "Nom:", placeholder = "Entrez votre nom"),
-            textInput("prenom", "Prénom:", placeholder = "Entrez votre prénom"),
-            numericInput("poids", "Poids (en kg):", value = NULL, min = 10, max = 500, step = 0.1),
-            sliderInput("taille", "Taille (en mètres):", min = 0.5, max = 2.5, value = 1.7, step = 0.01),
-            selectInput("pays", "Pays :", choices = liste_pays),
-            actionButton("calculer", "Calculer l'IMC")
+            width = 6,
+            numericInput("weight", "Entrez votre poids (en kg) :", value = 70),
+            sliderInput("height", "Choisissez votre taille (en m) :", min = 0.5, max = 2.5, value = 1.7, step = 0.01),
+            numericInput("age", "Entrez votre âge :", value = 30),
+            radioButtons("gender", "Genre :",
+                         c("Homme", "Femme")),
+            radioButtons("activity_level", "Niveau d'activité physique :",
+                         c("Sédentaire" = 1, "Modéré" = 2, "Actif" = 3)),
+            selectInput("goal", "Objectif :",
+                        c("Maintenir le poids", "Prendre du poids", "Prendre de la masse musculaire", "Perdre du poids")),
+            actionButton("calculate_button", "Calculer"),
+            class = "custom-box" # Appliquer couleur du fond de box
           ),
           mainPanel(
-            h3("Votre IMC est :"),
-            textOutput("resultat_imc"),
-            br(),
-            h4("Conseils :"),
-            fluidRow(
-              column(6, textOutput("imcAdvice")),
-              column(6, uiOutput("physique_image"))
+            width = 5,
+            h3("Comment utiliser le calculateur de besoins caloriques journaliers ? "),
+            wellPanel(
+              p("Entrez vos informations personnelles dans le panneau de gauche :"),
+              p("- Renseignez votre âge, votre sexe, votre poids et votre taille"), 
+              p("- Sélectionnez votre niveau d'activité physique et votre objectif parmi les options proposées"),
+              p("- Cliquez sur le bouton : Calculer pour obtenir une estimation des calories à consommer"),
+              class = "custom-box" # Appliquer couleur du fond de box
+            ),
+            conditionalPanel(
+              condition = "input.calculate_button > 0",
+              h3("Résultats IMC"),
+              wellPanel(
+                textOutput("bmi_result"),
+                class = "custom-box4" 
+              ),
+              h3("Besoins caloriques quotidiens"),
+              wellPanel(
+                textOutput("calories_result"),
+                class = "custom-box4" 
+              ),
+              h3("Proposition de calories par repas"),
+              fluidRow(
+                column(4, 
+                       wellPanel(
+                         h4("Petit-déjeuner"),
+                         textOutput("breakfast_calories"),
+                         class = "custom-box1 center-text" 
+                       )
+                ),
+                column(4, 
+                       wellPanel(
+                         h4("Déjeuner"),
+                         textOutput("lunch_calories"),
+                         class = "custom-box2 center-text" 
+                       )
+                ),
+                column(4, 
+                       wellPanel(
+                         h4("Dîner"),
+                         textOutput("dinner_calories"),
+                         class = "custom-box3 center-text"
+                       )
+                )
+              )
             )
           )
         )
       ),
+      
       # 3ème onglet Recommandations
       tabItem(
         tabName = "aides",
         h2("Recommandations"),
-        p("Suggestions à mettre")
+        p("Suggestions à mettre"),
+        p("Mettre code de Cédric avec conseils par rapport à IMC"),
       )
     )
   )
 )
+
