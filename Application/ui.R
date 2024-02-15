@@ -368,9 +368,10 @@ ui <- dashboardPage(
       # 3ème onglet Recommandations
       tabItem(
         tabName = "aides",
-        h2("Recommandations"),
-        p("Suggestions à mettre"),
-        p("Mettre code de Cédric avec conseils par rapport à IMC"),
+        h2("Recommandations basées sur l'IMC"),
+        p("Conseil"),
+        textOutput("imc_recommandations"),
+        uiOutput("physique_image")
       )
     )
   )

@@ -178,6 +178,27 @@ server <- function(input, output, session) {
       paste("Vos besoins caloriques quotidiens sont de ", round(calories_per_day), "kcal")
     })
     
+    # Afficher les recommandations en fonction de l'IMC
+    output$imc_recommandations <- renderText({
+      if (!is.null(input$calculate_button)) {
+        bmi <- input$weight / (input$height^2)
+        if (!is.na(bmi)) {
+          if (bmi < 18.5) {
+            return("Votre IMC indique que vous êtes en état de maigreur, ce qui peut être associé à un risque accru de certaines complications de santé. Il est crucial de chercher à atteindre un poids santé de manière saine. Pour ce faire, consultez un professionnel de la santé pour déterminer les causes possibles de votre sous-poids et élaborer un plan adapté pour atteindre un poids santé de façon sécuritaire. En parallèle, adoptez une alimentation équilibrée et nutritive, riche en calories. Privilégiez les aliments densément nutritifs tels que les noix, les graines, les avocats, les produits laitiers, les céréales complètes, les légumineuses et les viandes maigres. Essayez également de manger régulièrement et d'ajouter des collations saines entre les repas pour augmenter votre apport calorique quotidien de manière progressive. Enfin, l'exercice régulier est également important. Il peut vous aider à renforcer vos muscles et à favoriser un gain de poids sous forme de masse musculaire maigre. Optez pour des activités qui vous plaisent et qui peuvent vous aider à atteindre vos objectifs de santé. En suivant ces conseils et en travaillant avec un professionnel de la santé, vous pouvez progressivement atteindre un poids santé tout en améliorant votre bien-être général.")
+          } else if (bmi >= 18.5 && bmi < 24.9) {
+            return("Votre IMC est dans la plage normale. Choisissez des recettes équilibrées pour maintenir un poids santé. Cependant, il est toujours important de maintenir de saines habitudes de vie pour optimiser votre santé globale. Voici quelques conseils :
+Continuez à adopter une alimentation équilibrée comprenant une variété d'aliments nutritifs, notamment des fruits, des légumes, des protéines maigres, des céréales complètes et des graisses saines.
+Faites de l'exercice régulièrement en intégrant une combinaison d'activités cardiovasculaires, de renforcement musculaire et de flexibilité pour maintenir votre condition physique.
+Surveillez votre poids et votre composition corporelle régulièrement pour détecter tout changement significatif et ajustez votre alimentation et votre exercice en conséquence si nécessaire.")
+          } else if (bmi >= 25 && bmi < 29.9) {
+            return("Votre IMC indique que vous êtes en surpoids, ce qui peut augmenter le risque de développer certaines maladies chroniques telles que les maladies cardiaques, le diabète de type 2 et l'hypertension. Afin de perdre du poids de manière saine, privilégiez des recettes à faible teneur en calories et riches en nutriments. Pour cela, adoptez une alimentation équilibrée en réduisant votre consommation de calories. Limitez les aliments riches en sucres ajoutés, en graisses saturées et en aliments transformés. De plus, augmentez votre activité physique en intégrant au moins 150 minutes d'exercice modéré à vigoureux par semaine. Cela vous aidera à brûler des calories supplémentaires et à favoriser une perte de poids saine. Enfin, fixez-vous des objectifs réalistes de perte de poids et surveillez votre progression en tenant un journal alimentaire et en suivant vos habitudes d'exercice. En suivant ces conseils, vous pourrez progressivement atteindre un poids santé tout en améliorant votre bien-être général.")
+          } else {
+            return("Votre IMC indique que vous êtes en situation d'obésité, ce qui peut entraîner un risque significativement accru de divers problèmes de santé graves. Afin d'atteindre un poids santé, il est recommandé de choisir des recettes faibles en calories et riches en fibres. Si votre IMC est de 30 ou plus, il est important de prendre des mesures pour perdre du poids et améliorer votre santé globale. Voici quelques conseils pour vous aider dans ce processus : Consultez un professionnel de la santé pour obtenir une évaluation complète de votre santé et discuter des options de perte de poids adaptées à votre situation spécifique. Suivez un plan alimentaire équilibré et réduit en calories, en vous concentrant sur des aliments riches en nutriments tels que les fruits, les légumes, les protéines maigres et les céréales complètes. Engagez-vous dans une activité physique régulière comprenant à la fois des exercices cardiovasculaires et de renforcement musculaire pour brûler des calories et renforcer votre corps. Envisagez des interventions médicales ou chirurgicales si votre obésité est sévère et si d'autres mesures n'ont pas été efficaces pour atteindre un poids santé. En suivant ces conseils et en bénéficiant d'un suivi médical approprié, vous pourrez progressivement atteindre vos objectifs de poids et améliorer votre bien-être général.")
+          }
+        }
+      }
+    })
+    
     # Génération du plan de repas
     meal_plan <- data.frame(
       Meal = c("Petit-déjeuner", "Déjeuner", "Dîner"),
