@@ -1,0 +1,28 @@
+Groupe 1
+
+Membre du groupe:
+Cédric Octave ADECHINA, 
+Maxime DE BONI, 
+Antônio Gabriel ELEUTERIO VIANA, 
+Thomas FERNANDEZ, 
+Diamande DELANNAY, 
+Zineb BELMADAN
+
+
+Membre sur la création,collecte et mise en forme des données et cahier des charges:
+Zineb BELMADAN
+Antônio Gabriel ELEUTERIO VIANA
+Thomas FERNANDEZ
+
+Ce groupe a surtout sélectionné les recettes afin de créer la base de données de l'application.
+Les données sont répartis dans un tableau suivant ce modèle: nom de la recette, ingrédients , explication de la recette,pays d'origine, temps de préparation, kcal estimé, protéines, glucides,
+lipides, fibres, régime alimentaire et allergène.
+Le cahier des charges de l'application écrit sur Rmarkdown a aussi été effectué par ce groupe.
+Celui-ci inclut les objectifs et fonctionnalités, les outils utilisés, les packages utilisés, un calendrier, le design et interface utilisateur et pour finir la liste des ingrédients et des pays.
+
+Membre sur le code de l'application:
+Diamande DELANNAY
+Maxime DE BONI
+Cédric Octave ADECHINA
+
+Cette équipe a rédigé tous le code.Ils ont crées l'interface utilisateur et les calculs fait par l'application pour répondre aux besoins de l'utilisateurs. L'interface permet à l’utilisateur de calculer son IMC, d'avoir des recommandations alimentaires et de fournir des recettes. Ces recommandations sont accompagnées de graphiques et de calcul de besoin journalier afin que l'utilisateur suive un régime particulier.
