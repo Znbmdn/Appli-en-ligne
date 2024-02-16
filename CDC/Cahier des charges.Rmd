@@ -39,26 +39,26 @@ L'application sera développé en utilisant les technologies suivantes
 # Packages:
 
 1) Shinydashboard: est un package R conçu pour créer des tableau de bord interactifs dans shiny.
-```{r setup, include=FALSE}
+```{r Shinydashboard, include=FALSE}
 # install.packages
-library(Shinydashboard)
+library(shinydashboard)
 ```
 
 2) DT: Le package DataTables est utilisé pour afficher des tableaux de données interactifs dans shiny, offre plusieurs fonctionnalités comme la recherche, le tri, etc..
-```{r setup, include=FALSE}
+```{r DT, include=FALSE}
 # install.packages
 library(DT)
 ```
 
 3) Shiny: le package permet de créer des application web interactives en R. Il permet la gestion des entrées, et la création d'une interface utilisateur interactive
-```{r setup, include=FALSE}
+```{r Shiny, include=FALSE}
 # install.packages
 library(shiny)
 ```
 
 # Calendrier
 
-```{r setup, include=FALSE}
+```{r calendrier, include=FALSE}
 
 # install.packages
 library(ggplot2)
@@ -145,7 +145,7 @@ m ## afficher la carte
 
 # Liste déroulante des ingrédients
 
-```{r setup, include=FALSE}
+```{r Liste, include=FALSE}
 
 #Liste ingrédients
 
