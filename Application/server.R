@@ -169,7 +169,9 @@ server <- function(input, output, session) {
     # Calcul de l'IMC
     bmi <- input$weight / (input$height^2)
     output$bmi_result <- renderText({
-      paste("Votre IMC est de ", round(bmi, 2))
+      paste("Votre IMC est de ", round(bmi, 2), "
+            
+            (Vous pouvez consulter l'onglet «Recommandations» pour obtenir des informations et des conseils relatifs à votre IMC)")
     })
     
     # Calcul des besoins caloriques quotidiens
@@ -197,6 +199,44 @@ Surveillez votre poids et votre composition corporelle régulièrement pour dét
           }
         }
       }
+    })
+    
+    # Affichage du graphique IMC
+    output$imc_plot <- renderPlot({
+      # Définition des valeurs d'IMC et des catégories associées
+      imc_values <- c(10, 18.5, 24.9, 29.9, 34.9, 39.9, 60)
+      
+      # Calcul des valeurs moyennes des plages
+      mid_values <- c(14.25, 21.7, 27.4, 32.4, 37.4, 49.95)
+      
+      # Création du graphique
+      plot(imc_values, rep(1, length(imc_values)), type = "n", xlab = "IMC", ylab = "", xlim = c(10, 60), ylim = c(0, 2), yaxt = "n", xaxt = "n", bty = "n")
+      axis(1, at = imc_values, labels = imc_values)
+      axis(2, at = 1, labels = "", lwd = 0)
+      
+      # Ajout de couleurs pour les plages d'IMC
+      rect(10, 0.5, 18.5, 2, col = rgb(0, 1, 0, 0.3), border = NA) # Poids insuffisant
+      rect(18.5, 0.5, 24.9, 2, col = rgb(1, 1, 0, 0.3), border = NA) # Poids normal
+      rect(24.9, 0.5, 29.9, 2, col = rgb(1, 0.5, 0, 0.3), border = NA) # Surpoids
+      rect(29.9, 0.5, 34.9, 2, col = rgb(1, 0, 0, 0.3), border = NA) # Obésité modérée
+      rect(34.9, 0.5, 39.9, 2, col = rgb(0.5, 0, 0, 0.3), border = NA) # Obésité sévère
+      rect(39.9, 0.5, 60, 2, col = rgb(0, 0, 0, 0.3), border = NA) # Obésité morbide
+      
+      # Ajout de textes
+      text(mid_values, rep(1.2, length(mid_values)), c("Poids insuffisant", "Poids normal", "Surpoids", "Obésité modérée", "Obésité sévère", "Obésité morbide"), cex = 1, col = "black", pos = 3)
+      
+      # Ajout d'une flèche représentant l'IMC de l'utilisateur
+      if (bmi < 10) {
+        text(11, 1.7, "← ", col = "blue", cex = 2)
+        text(11, 1.8, "Votre IMC", col = "blue")
+      } else if (bmi > 60) {
+        text(59, 1.7, "→", col = "blue", cex = 2)
+        text(59, 1.8, "Votre IMC", col = "blue")
+      } else {
+        segments(bmi, 1.5, bmi, 1.9, col = "blue", lwd = 3)
+        text(bmi, 1.95, "Votre IMC", col = "blue")
+      }
+      
     })
     
     # Génération du plan de repas
@@ -264,6 +304,7 @@ Surveillez votre poids et votre composition corporelle régulièrement pour dét
   observeEvent(input$close_modal_button, {
     removeModal()
   })
+  
   
   
 }

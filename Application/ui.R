@@ -95,7 +95,7 @@ ui <- dashboardPage(
       # Onglets dans le menu
       menuItem("Profil Nutritionnel", tabName = "user", icon = icon("user")), 
       menuItem("Choix de Recettes", tabName = "filter_recipes", icon = icon("cutlery")),
-      menuItem("Recommandations", tabName = "aides", icon = icon("search")),
+      menuItem("Recommandations IMC", tabName = "aides", icon = icon("search")),
       menuItem("À propos", tabName = "about", icon = icon("info-circle"))
     )
   ),
@@ -369,11 +369,32 @@ ui <- dashboardPage(
       tabItem(
         tabName = "aides",
         h2("Recommandations basées sur l'IMC"),
-        p("Conseil"),
-        textOutput("imc_recommandations"),
-        uiOutput("physique_image")
+        conditionalPanel(
+          condition = "input.calculate_button == 0",
+          mainPanel(
+            width = 7,
+            wellPanel(
+              class = "custom-box",
+              p("Pour faire apparaître les conseils sur votre IMC, il est impératif de calculer votre IMC en rentrant vos informations dans l'onglet «Profil Nutritionnel».")))),
+        conditionalPanel(
+          condition = "input.calculate_button > 0",
+          mainPanel(
+            width = 11,
+            wellPanel(
+              class = "custom-box",
+              p("Vous avez la liberté de choisir vos recettes et votre apport calorique quotidien en fonction de vos préférences et de vos objectifs. Cependant, en ce qui concerne votre santé liée à l'Indice de Masse Corporelle (IMC), nous aimerions vous fournir quelques conseils recommandés."),
+              p("Dans le graphique ci-dessous, plusieurs plages de l'IMC sont représentées, avec votre IMC marqué spécifiquement. Cela vous permet de visualiser facilement où vous vous situez par rapport aux différentes catégories de poids.")),
+            wellPanel(
+              class = "custom-box",
+              title = "Graphique IMC",
+              plotOutput("imc_plot")),
+            wellPanel(
+              class = "custom-box",
+              textOutput("imc_recommandations"),
+              uiOutput("physique_image"))
+          )
+        )
       )
     )
   )
 )
-
