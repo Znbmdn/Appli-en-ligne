@@ -35,7 +35,7 @@ L'application sera développé en utilisant les technologies suivantes
 -R :Ce langage nous a permis la manipulation des données avec son vaste ensemble de packages dédiées à celà. ce qui facilite le traitement et la visualisation des informations liées aux recettes proposéés.
 -Github :La plateforme de développement collaboratif basée sur Git nous a faciliter le travail d'équipe et a permis le suivi des modifications apportées au code source.
 -Rstudio :L'environnement de développement  nous a offert une interface utilisateur pour la programmation offrant de différentes  fonctionnalités puissantes.
-
+ 
 # Packages:
 
 1) Shinydashboard: est un package R conçu pour créer des tableau de bord interactifs dans shiny.
@@ -112,9 +112,10 @@ Les résultats de recherche doivent être présentés de manière claire et orga
 Les détails des recettes sélectionnées doivent être affichés dans une fenêtre modale avec un bouton pour fermer la fenêtre.
 
 L'application comprendra les pages suivantes :
-- Page 1: Page d'accueil
-- Page 2: Choix de la recette
-- Page 3: Instructions
+- Page 1: Page d'accueil> Profil nutritionnel
+- Page 2: Choix de la recette avec les instructions
+- Page 3: Recommandations
+- Page 4: à propos
 
 
 # Liste déroulante des pays 
